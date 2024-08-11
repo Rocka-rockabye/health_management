@@ -54,6 +54,7 @@ public class AdminController {
         List<Admin> list = adminService.findAll();
         return Result.success(list);
     }
+    
 //    分页查询
     @GetMapping("/search")
     public Result findBySearch(Params params) {
