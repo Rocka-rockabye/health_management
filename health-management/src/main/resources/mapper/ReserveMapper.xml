@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengjj.healthmanagement.dao.ReserveDao">
+
+    <select id="findBySearch" resultType="com.zhengjj.healthmanagement.entity.Reserve">
+        select * from reserve
+
+        <where>
+            <if test="params != null and params.time != null and params.time != ''">
+                and time like concat('%', #{ params.time }, '%')
+            </if>
+            <if test="params != null and params.checkresult != null and params.checkresult != ''">
+                and checkresult like concat('%', #{ params.checkresult }, '%')
+            </if>
+        </where>
+        order by time DESC
+    </select>
+
+</mapper>

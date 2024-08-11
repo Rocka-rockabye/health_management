@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengjj.healthmanagement.dao.AdminDao">
+
+    <!--2. 基于xml的方式-->
+    <!--<select id="findAll" resultType="com.zhengjj.healthmanagement.entity.Admin">-->
+        <!--select * from admin-->
+    <!--</select>-->
+
+    <!--模糊查询-->
+    <select id="findBySearch" resultType="com.zhengjj.healthmanagement.entity.Admin">
+        select * from admin
+        <where>
+--             权限控制，当进入系统时，查询除管理员以外的信息
+            role != 'ROLE_ADMIN'
+            <if test="params != null and params.name != null and params.name != ''">
+                and name like concat('%', #{ params.name }, '%')
+            </if>
+            <if test="params != null and params.phone != null and params.phone != ''">
+                and phone like concat('%', #{ params.phone }, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

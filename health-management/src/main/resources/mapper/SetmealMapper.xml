@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengjj.healthmanagement.dao.SetmealDao">
+
+    <select id="findBySearch" resultType="com.zhengjj.healthmanagement.entity.Setmeal">
+--         select * from setmeal
+-- 多表关联方法二：使用数据库sql语句关联模块
+        select setmeal.*, type.name AS typeName from setmeal
+        left join type on setmeal.typeId = type.id
+        <where>
+            <if test="params != null and params.name != null and params.name != ''">
+                and setmeal.name like concat('%', #{ params.name }, '%')
+            </if>
+            <if test="params != null and params.helpCode != null and params.helpCode != ''">
+                and setmeal.helpCode like concat('%', #{ params.helpCode }, '%')
+            </if>
+        </where>
+        order by setmeal.id
+    </select>
+
+</mapper>
